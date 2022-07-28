@@ -34,6 +34,9 @@ Add the following permissions to your collections. These permissions ensure that
 
 ![collection_permission](https://user-images.githubusercontent.com/45597179/181487469-707c189d-46e7-4621-a741-d53e3b2bd34b.png)
 
+Create new storage bucket for profile image.
+![bucket_permission](https://user-images.githubusercontent.com/45597179/181490365-66097640-d1c2-4a3f-8764-0029f014e81c.png)
+
 ## 🚀 Deploy the Front End
 
 You have two options to deploy the front-end and we will cover both of them here. In either case, you will need to fill in these environment variables that help your frontend connect to Appwrite.
@@ -46,15 +49,17 @@ You have two options to deploy the front-end and we will cover both of them here
 
 Follow these instructions to run the demo app locally
 
-$ git clone https://github.com/devkishor8007/todo-with-flutter.git
-$ cd todo-with-flutter
+$ git clone https://github.com/MrWael/demo-todo-with-flutter3.git
+$ cd demo-todo-with-flutter3
 
 Make a one file in the Clone Repo called constant.dart
 
     class AppConstant {
-    static const String projectid = 'your appwrite project id';
-    static const String endPoint = 'your own endpoint';
-    static const String database = 'your appwrite database id';
+    static const String projectid = '[PROJECTID]';
+    static const String endPoint = 'https://[SERVERIPADDRESS]/v1';
+    static const String database = '[DATABASEID]';
+    static const String collection = '[COLLECTIONID]';
+    static const String profileImgBucketId = 'BUCKETID';
     }
 
 Now run the following commands and you should be good to go 💪🏼
@@ -83,11 +88,4 @@ $ flutter run
 
 If you get stuck anywhere, hop onto one of our [support channels in discord](https://discord.com/invite/GSeTUeA) and we'd be delighted to help you out 🤝
 
-## 😧 Help Wanted
 
-Our access credentials were recently compromised and someone tried to ruin these demos. They decided to leave behind 15 easter eggs 🥚 for you to discover. If you find them, submit a PR cleaning up that section of the code (One PR per person across all the repos). You can track the number of claimed Easter Eggs using the badge at the top.
-
-The first 15 people to get their PRs merged will receive some Appwrite Swags 🤩 . Just head over to our [Discord channel](https://discord.com/invite/GSeTUeA)
- and share your PR link with us.
-
-> *UPDATE **17-11-2021**:* The easter egg contest is now closed. 
