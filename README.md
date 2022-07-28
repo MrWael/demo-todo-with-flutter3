@@ -28,13 +28,11 @@ Add the following rules to the collection.
    
 ![attributes](https://user-images.githubusercontent.com/45597179/181487365-4a8c350b-f6da-4be7-b38a-9854cd84a6e4.png)
 
-![collection_permission](https://user-images.githubusercontent.com/45597179/181487469-707c189d-46e7-4621-a741-d53e3b2bd34b.png)
-
  - Permissions
 
 Add the following permissions to your collections. These permissions ensure that only registered users can access the collection.
 
-![image](https://user-images.githubusercontent.com/73419211/122684974-819ce500-d228-11eb-93c6-4d2b05167633.png)
+![collection_permission](https://user-images.githubusercontent.com/45597179/181487469-707c189d-46e7-4621-a741-d53e3b2bd34b.png)
 
 ## 🚀 Deploy the Front End
 
