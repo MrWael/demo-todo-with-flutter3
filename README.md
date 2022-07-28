@@ -37,6 +37,13 @@ Add the following permissions to your collections. These permissions ensure that
 Create new storage bucket for profile image.
 ![bucket_permission](https://user-images.githubusercontent.com/45597179/181490365-66097640-d1c2-4a3f-8764-0029f014e81c.png)
 
+
+Create new placeholder user, with the following info:
+User ID: 133
+Email: guest@temp.com
+Password: 12345678
+
+
 ## 🚀 Deploy the Front End
 
 You have two options to deploy the front-end and we will cover both of them here. In either case, you will need to fill in these environment variables that help your frontend connect to Appwrite.
@@ -61,6 +68,7 @@ Make a one file in the Clone Repo called constant.dart
     static const String collection = '[COLLECTIONID]';
     static const String profileImgBucketId = 'BUCKETID';
     }
+
 
 Now run the following commands and you should be good to go 💪🏼
 
