@@ -6,31 +6,31 @@ class User {
   String id;
   String name;
   DateTime registration;
-  int status;
+  bool status;
   int passwordUpdate;
   String email;
   bool emailVerification;
   Map<String, dynamic> prefs;
   User({
-    this.id,
-    this.name,
-    this.registration,
-    this.status,
-    this.passwordUpdate,
-    this.email,
-    this.emailVerification,
-    this.prefs,
+    required this.id,
+    required this.name,
+    required this.registration,
+    required this.status,
+    required this.passwordUpdate,
+    required this.email,
+    required this.emailVerification,
+    required this.prefs,
   });
 
   User copyWith({
-    String id,
-    String name,
-    DateTime registration,
-    int status,
-    int passwordUpdate,
-    String email,
-    bool emailVerification,
-    Map<String, dynamic> prefs,
+    required String id,
+    required String name,
+    required DateTime registration,
+    required bool status,
+    required int passwordUpdate,
+    required String email,
+    required bool emailVerification,
+    required Map<String, dynamic> prefs,
   }) {
     return User(
       id: id ?? this.id,

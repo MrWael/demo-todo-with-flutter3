@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 
-Widget textFormField({
-  TextEditingController controller,
-  String hintText,
-  TextInputType keyboardType,
-  Color textColor,
-  bool obscureText,
-  Function(String) validator,
-}) {
+Widget textFormField(
+    {TextEditingController? controller,
+    String? hintText,
+    TextInputType? keyboardType,
+    Color? textColor,
+    bool? obscureText,
+    final String? Function(String?)? validator}) {
   return TextFormField(
     validator: validator,
     obscureText: obscureText ?? false,

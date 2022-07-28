@@ -4,19 +4,19 @@ class AddData {
   String title;
   String description;
   String id;
-  DateTime date;
+  String date;
   AddData({
-    this.title,
-    this.description,
-    this.id,
-    this.date,
+    required this.title,
+    required this.description,
+    required this.id,
+    required this.date,
   });
 
   AddData copyWith({
-    String title,
-    String description,
-    String id,
-    DateTime date,
+    required String title,
+    required String description,
+    required String id,
+    required String date,
   }) {
     return AddData(
       title: title ?? this.title,
@@ -30,16 +30,27 @@ class AddData {
     return {
       'title': title,
       'description': description,
-      'date': date.millisecondsSinceEpoch,
+      'date': date,
     };
   }
 
-  factory AddData.fromMap(Map<String, dynamic> map) {
+//used for add or update the database
+  factory AddData.fromMap_ae(Map<String, dynamic> map) {
     return AddData(
       title: map['title'],
       description: map['description'],
       id: map['\$id'],
-      date: DateTime.fromMillisecondsSinceEpoch(map['date']),
+      date: map['date'],
+    );
+  }
+
+//used for initialization from database
+  factory AddData.fromMap(Map<String, dynamic> map) {
+    return AddData(
+      title: map['data']?['title'],
+      description: map['data']?['description'],
+      id: map['\$id'],
+      date: map['data']?['date'],
     );
   }
 

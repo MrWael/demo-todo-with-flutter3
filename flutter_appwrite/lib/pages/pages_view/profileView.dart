@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-
-import 'package:easy_one/data/model/user_model.dart';
+import 'package:demotodoflutter_sdk3/data/model/user_model.dart';
 
 // ignore: must_be_immutable
 class ProfileView extends StatelessWidget {
   User user;
   ProfileView({
-    this.user,
+    required this.user,
   });
   @override
   Widget build(BuildContext context) {

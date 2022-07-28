@@ -1,13 +1,11 @@
 import 'package:appwrite/appwrite.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:easy_one/data/services/api_service.dart';
-import 'package:easy_one/main.dart';
-import 'package:easy_one/pages/auth_page/signupPage.dart';
-import 'package:easy_one/widget/elevatedButton_widget.dart';
-import 'package:easy_one/widget/routeHelper.dart';
-import 'package:easy_one/widget/textButton.dart';
-import 'package:easy_one/widget/textFormField_widget.dart';
+import 'package:demotodoflutter_sdk3/data/model/user_model.dart';
+import 'package:demotodoflutter_sdk3/res/routes.gr.dart' as route;
+import 'package:demotodoflutter_sdk3/data/services/api_service.dart';
+import 'package:demotodoflutter_sdk3/widget/textFormField_widget.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class LoginPage extends StatefulWidget {
@@ -25,6 +23,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    final router = AutoRouter.of(context);
     return SafeArea(
         child: Scaffold(
       backgroundColor: Colors.indigo.withOpacity(0.6),
@@ -51,7 +50,7 @@ class _LoginPageState extends State<LoginPage> {
                 textColor: Colors.white,
                 controller: _email,
                 validator: (val) {
-                  if (val.isEmpty) return 'Email can\'t be empty';
+                  if (val!.isEmpty) return 'Email can\'t be empty';
                   return null;
                 },
                 hintText: 'enter your full name',
@@ -63,7 +62,7 @@ class _LoginPageState extends State<LoginPage> {
                 textColor: Colors.white,
                 obscureText: true,
                 validator: (val) {
-                  if (val.isEmpty) return 'Password can\'t be empty';
+                  if (val!.isEmpty) return 'Password can\'t be empty';
                   if (val.length < 8) return 'Password length is not matched';
                   return null;
                 },
@@ -73,50 +72,63 @@ class _LoginPageState extends State<LoginPage> {
               SizedBox(
                 height: size.height * 0.04,
               ),
-              elevatedButton(
-                context,
-                "Login",
-                size: Size(size.width, size.height * 0.06),
-                onPressed: () async {
-                  var email = _email.text;
-                  var password = _password.text;
-                  if (_globalKey.currentState.validate()) {
-                    try {
-                      await ApiService.instance
-                          .login(email: email, password: password);
+              ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      minimumSize: size / 9,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      primary: Colors.red,
+                      textStyle: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                      )),
+                  onPressed: () async {
+                    var email = _email.text;
+                    var password = _password.text;
+                    late User user;
+                    if (true) {
+                      try {
+                        await ApiService.instance
+                            .login(email: email, password: password)
+                            .then((value) async =>
+                                user = await ApiService.instance.getUser());
 
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text("Welcome to EasyOne"),
-                        ),
-                      );
-                      _password.clear();
-                      _email.clear();
-                      pushReplacement(context, MainPage());
-                    } on AppwriteException catch (e) {
-                      print(e);
-                      _password.clear();
-                      _email.clear();
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(e.message),
-                        ),
-                      );
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text("Welcome"),
+                          ),
+                        );
+                        _password.clear();
+                        _email.clear();
+                        router.replaceAll([route.HomeRoute(user: user)]);
+                      } on AppwriteException catch (e) {
+                        print(e);
+                        _password.clear();
+                        _email.clear();
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(e.message.toString()),
+                          ),
+                        );
+                      }
                     }
-                  } else {
-                    print("not validate");
-                  }
-                },
-              ),
+                  },
+                  child: Text('Login')),
               SizedBox(
                 height: size.height * 0.04,
               ),
-              textButton(
-                'Don\'t have an account?  SignUp',
-                onPressed: () {
-                  push(context, SignUp());
-                },
-              ),
+              TextButton(
+                onPressed: () => router.push(const route.SignUpRoute()),
+                child: Text(
+                  'Don\'t have an account?  SignUp',
+                  style: TextStyle(
+                    color: Color(Colors.grey.value),
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              )
             ],
           ),
         ),

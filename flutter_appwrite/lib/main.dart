@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:easy_one/data/model/user_model.dart';
-import 'package:easy_one/data/services/api_service.dart';
-import 'package:easy_one/pages/auth_page/loginPage.dart';
-import 'package:easy_one/pages/pages_view/homePage.dart';
+import 'package:demotodoflutter_sdk3/data/model/user_model.dart';
+import 'package:demotodoflutter_sdk3/data/services/api_service.dart';
+import 'package:demotodoflutter_sdk3/pages/auth_page/loginPage.dart';
+import 'package:demotodoflutter_sdk3/pages/pages_view/homePage.dart';
+import 'res/routes.gr.dart';
+
+final _appRouter = AppRouter();
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,16 +21,17 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
+      routerDelegate: _appRouter.delegate(),
       title: 'Easyone',
       debugShowCheckedModeBanner: false,
-      home: MainPage(),
+      routeInformationParser: _appRouter.defaultRouteParser(),
     );
   }
 }
 
 class MainPage extends StatelessWidget {
-  const MainPage({Key key}) : super(key: key);
+  const MainPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -36,10 +40,11 @@ class MainPage extends StatelessWidget {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting)
             return SplashPage();
-          if (snapshot.hasData)
+          if (snapshot.hasData && snapshot.data!.id != '133') {
             return HomePage(
-              user: snapshot.data,
+              user: snapshot.data!,
             );
+          }
           return LoginPage();
         });
   }
@@ -55,7 +60,7 @@ class SplashPage extends StatelessWidget {
           "Loading...",
           style: TextStyle(
             color: Colors.white,
-            fontSize: Theme.of(context).textTheme.headline6.fontSize,
+            fontSize: Theme.of(context).textTheme.headline6!.fontSize,
           ),
         ),
       ),

@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 Widget makeText(
   String textString, {
-  Color color,
-  double size,
-  FontWeight fontWeight,
-  TextOverflow overflow,
+  Color? color,
+  double? size,
+  FontWeight? fontWeight,
+  TextOverflow? overflow,
 }) {
   return Text(
     textString,

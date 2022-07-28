@@ -1,32 +1,30 @@
 import 'dart:math';
 import 'package:appwrite/appwrite.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:easy_one/data/model/addData_model.dart';
-import 'package:easy_one/data/model/user_model.dart';
-import 'package:easy_one/data/services/api_service.dart';
-import 'package:easy_one/pages/pages_view/homePage.dart';
-import 'package:easy_one/widget/elevatedButton_widget.dart';
-import 'package:easy_one/widget/makeText.dart';
-import 'package:easy_one/widget/routeHelper.dart';
-import 'package:easy_one/widget/textFormField_widget.dart';
+import 'package:demotodoflutter_sdk3/data/model/addData_model.dart';
+import 'package:demotodoflutter_sdk3/data/model/user_model.dart';
+import 'package:demotodoflutter_sdk3/data/services/api_service.dart';
+import 'package:demotodoflutter_sdk3/widget/makeText.dart';
+import 'package:demotodoflutter_sdk3/widget/textFormField_widget.dart';
+import 'package:auto_route/auto_route.dart';
+import 'package:demotodoflutter_sdk3/res/routes.gr.dart' as route;
 
 class ShowDetailPage extends StatefulWidget {
   final AddData addData;
   final User user;
-  ShowDetailPage({this.addData, this.user});
+  ShowDetailPage({required this.addData, required this.user});
 
   @override
   _ShowDetailPageState createState() => _ShowDetailPageState();
 }
 
 class _ShowDetailPageState extends State<ShowDetailPage> {
-  TextEditingController _edittitle;
-  TextEditingController _editdescription;
+  late TextEditingController _edittitle;
+  late TextEditingController _editdescription;
 
   List<AddData> gettingData = [];
   bool loading = true;
-  bool isEdit;
+  bool isEdit = false;
 
   @override
   void initState() {
@@ -40,7 +38,7 @@ class _ShowDetailPageState extends State<ShowDetailPage> {
         TextEditingController(text: isEdit ? widget.addData.description : '');
   }
 
-  void _getDataInsert() async {
+  Future _getDataInsert() async {
     gettingData = await ApiService.instance.insertData();
     loading = false;
     if (mounted) setState(() {});
@@ -49,6 +47,7 @@ class _ShowDetailPageState extends State<ShowDetailPage> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    final router = AutoRouter.of(context);
     return SafeArea(
         child: Scaffold(
       appBar: AppBar(
@@ -62,7 +61,7 @@ class _ShowDetailPageState extends State<ShowDetailPage> {
             color: Colors.black,
           ),
           onPressed: () {
-            Navigator.pop(context);
+            router.pop(context);
           },
         ),
         title: makeText(
@@ -71,7 +70,7 @@ class _ShowDetailPageState extends State<ShowDetailPage> {
         ),
       ),
       body: loading == null
-          ? ''
+          ? Spacer()
           : Stack(
               children: [
                 Container(
@@ -84,7 +83,7 @@ class _ShowDetailPageState extends State<ShowDetailPage> {
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize:
-                              Theme.of(context).textTheme.headline6.fontSize,
+                              Theme.of(context).textTheme.headline6!.fontSize,
                         ),
                       ),
                       SizedBox(
@@ -99,11 +98,11 @@ class _ShowDetailPageState extends State<ShowDetailPage> {
                       SizedBox(
                         height: 20,
                       ),
-                      makeText(
-                          DateFormat.yMMMEd().format(
-                            widget.addData.date,
-                          ),
-                          color: Colors.grey),
+                      // makeText(
+                      //     DateFormat.yMMMEd().format(
+                      //       DateTime.parse(widget.addData.date),
+                      //     ),
+                      //     color: Colors.grey),
                     ],
                   ),
                 ),
@@ -121,7 +120,7 @@ class _ShowDetailPageState extends State<ShowDetailPage> {
                             .deleteData(documentId: widget.addData.id);
                         _getDataInsert();
 
-                        pop(context);
+                        router.pop();
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content: Text('Delete Successfully'),
@@ -164,48 +163,58 @@ class _ShowDetailPageState extends State<ShowDetailPage> {
                                   SizedBox(
                                     height: size.height * 0.01,
                                   ),
-                                  elevatedButton(
-                                    context,
-                                    "Update",
-                                    onPressed: () async {
-                                      final checkData = AddData(
-                                        title: _edittitle.text,
-                                        description: _editdescription.text,
-                                        date: DateTime.now().add(
-                                          Duration(
-                                            days: Random().nextInt(5),
+                                  ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                          minimumSize: size / 9,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(12),
                                           ),
-                                        ),
-                                      );
-                                      try {
-                                        var added =
-                                            await ApiService.instance.editData(
-                                          addData: checkData,
-                                          documentId: widget.addData.id,
-                                          write: ['user:${widget.user.id}'],
-                                          read: ['user:${widget.user.id}'],
+                                          primary: Colors.red,
+                                          textStyle: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 20,
+                                          )),
+                                      onPressed: () async {
+                                        final checkData = AddData(
+                                          title: _edittitle.text,
+                                          description: _editdescription.text,
+                                          id: widget.addData.id,
+                                          date: DateTime.now()
+                                              .add(
+                                                Duration(
+                                                  days: Random().nextInt(5),
+                                                ),
+                                              )
+                                              .toString(),
                                         );
-                                        print(added);
-                                        _getDataInsert();
-                                        _editdescription.clear();
-                                        _edittitle.clear();
-                                        push(
-                                          context,
-                                          HomePage(
-                                            user: widget.user,
-                                          ),
-                                        );
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(
-                                          SnackBar(
-                                            content: Text('Edit Successfully'),
-                                          ),
-                                        );
-                                      } on AppwriteException catch (e) {
-                                        print(e.message);
-                                      }
-                                    },
-                                  ),
+                                        try {
+                                          var added = await ApiService.instance
+                                              .editData(
+                                            addData: checkData,
+                                            documentId: widget.addData.id,
+                                            write: ['user:${widget.user.id}'],
+                                            read: ['user:${widget.user.id}'],
+                                          );
+                                          print(added);
+                                          _getDataInsert().then((value) {
+                                            _editdescription.clear();
+                                            _edittitle.clear();
+                                          });
+                                          router.push(route.HomeRoute(
+                                              user: widget.user));
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            SnackBar(
+                                              content:
+                                                  Text('Edit Successfully'),
+                                            ),
+                                          );
+                                        } on AppwriteException catch (e) {
+                                          print(e.message);
+                                        }
+                                      },
+                                      child: Text('Update')),
                                 ],
                               );
                             });
