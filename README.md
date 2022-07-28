@@ -26,8 +26,9 @@ Add the following rules to the collection.
 
     Make sure that your key exactly matches the key in the images
    
-  ![image](https://user-images.githubusercontent.com/73419211/122684906-0a675100-d228-11eb-91d0-ff70e216b7cb.png)
-  ![image](https://user-images.githubusercontent.com/73419211/122684925-2965e300-d228-11eb-87a6-301cff857fb9.png)
+![attributes](https://user-images.githubusercontent.com/45597179/181487365-4a8c350b-f6da-4be7-b38a-9854cd84a6e4.png)
+
+![collection_permission](https://user-images.githubusercontent.com/45597179/181487469-707c189d-46e7-4621-a741-d53e3b2bd34b.png)
 
  - Permissions
 
