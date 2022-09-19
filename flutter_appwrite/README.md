@@ -15,33 +15,40 @@ Follow our simple [Installation Guide](https://appwrite.io/docs/installation) to
 
 We need to make a few configuration changes to your Appwrite server.
 
-1. Add a new Flutter App (Android or iOS or both) in Appwrite and enter application id of your application (io.appwrite.todo, etc) 
-![image](https://user-images.githubusercontent.com/73419211/122684732-e9eac700-d226-11eb-954c-f7cb5327d042.png)
+1. Add a new Flutter App (Android or iOS or any supported platform) in Appwrite and enter application id of your application (io.appwrite.todo, etc) 
+![image](https://user-images.githubusercontent.com/45597179/191024380-6aadb210-5d95-4109-bd82-1f023416e0f9.png)
 
-2. Create a new collection with the following properties
+2. Create a new database then inside it create a new collection with the following properties
+![image](https://user-images.githubusercontent.com/45597179/191024866-f35851f4-446a-41b8-b2f4-3510b57fa7c3.png)
+
 
   - Rules
 
 Add the following rules to the collection.
 
     Make sure that your key exactly matches the key in the images
-   
-![attributes](https://user-images.githubusercontent.com/45597179/181487365-4a8c350b-f6da-4be7-b38a-9854cd84a6e4.png)
 
- - Permissions
+- Permissions
 
 Add the following permissions to your collections. These permissions ensure that only registered users can access the collection.
 
-![collection_permission](https://user-images.githubusercontent.com/45597179/181487469-707c189d-46e7-4621-a741-d53e3b2bd34b.png)
+![image](https://user-images.githubusercontent.com/45597179/191024915-cd310e55-338f-4737-8cda-1cc20d50444d.png)
 
-Create new storage bucket for profile image.
-![bucket_permission](https://user-images.githubusercontent.com/45597179/181490365-66097640-d1c2-4a3f-8764-0029f014e81c.png)
+
+ 
+Add the following attributes
+![image](https://user-images.githubusercontent.com/45597179/191026534-5985352e-569f-4dd4-8430-63a248b42332.png)
+
+Create new storage bucket for profile image, with the correct permissions.
+![image](https://user-images.githubusercontent.com/45597179/191026919-2c739f47-6e18-48d0-aebc-3f900989eb4f.png)
 
 
 Create new placeholder user, with the following info:
 User ID: 133
 Email: guest@temp.com
 Password: 12345678
+![image](https://user-images.githubusercontent.com/45597179/191026983-2906dc83-09a1-4f91-8446-9c601ffcc493.png)
+
 
 
 ## 🚀 Deploy the Front End
@@ -66,7 +73,7 @@ Make a one file in the Clone Repo called constant.dart
     static const String endPoint = 'https://[SERVERIPADDRESS]/v1';
     static const String database = '[DATABASEID]';
     static const String collection = '[COLLECTIONID]';
-    static const String profileImgBucketId = 'BUCKETID';
+    static const String profileImgBucketId = '[BUCKETID]';
     }
 
 
