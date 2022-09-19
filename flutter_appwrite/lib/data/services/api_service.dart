@@ -13,7 +13,7 @@ class ApiService {
 
   Client _client = Client();
   Account _account = Account(Client());
-  Databases _db = Databases(Client(), databaseId: AppConstant.database);
+  Databases _db = Databases(Client());
   Storage _storage = Storage(Client());
 
   ApiService._internal() {
@@ -21,7 +21,7 @@ class ApiService {
         .setProject(AppConstant.projectid)
         .setSelfSigned(status: true);
     _account = Account(_client);
-    _db = Databases(_client, databaseId: AppConstant.database);
+    _db = Databases(_client);
     _storage = Storage(_client);
   }
 
@@ -39,7 +39,7 @@ class ApiService {
   Future signup(
       {required String name, required String email, required String password}) {
     return _account.create(
-        userId: 'unique()', name: name, email: email, password: password);
+        userId: ID.unique(), name: name, email: email, password: password);
   }
 
   Future updateanylogin({required String email, required String password}) {
@@ -72,23 +72,23 @@ class ApiService {
 
   Future<AddData> getAddData({
     AddData? addData,
-    List<String>? read,
-    List<String>? write,
+    List<String>? permissions,
   }) async {
     final res = await _db.createDocument(
+      databaseId: AppConstant.database,
       collectionId: AppConstant.collection,
-      documentId: 'unique()',
+      documentId: ID.unique(),
       data: addData!.toMap(),
-      read: read,
-      write: write,
+      permissions: permissions,
     );
     return AddData.fromMap_ae(res.data);
   }
 
   Future<List<AddData>> insertData() async {
     final res = await _db.listDocuments(
+      databaseId: AppConstant.database,
       // offset: 100,
-      limit: 100,
+      // limit: 100,
       collectionId: AppConstant.collection,
     );
 
@@ -99,22 +99,22 @@ class ApiService {
 
   Future deleteData({required String documentId}) async {
     return await _db.deleteDocument(
-        collectionId: AppConstant.collection, documentId: documentId);
+        databaseId: AppConstant.database,
+        collectionId: AppConstant.collection,
+        documentId: documentId);
   }
 
   Future<AddData> editData({
     required String documentId,
     required AddData addData,
-    List<String>? read,
-    List<String>? write,
+    List<String>? permissions,
   }) async {
     final res = await _db.updateDocument(
-      collectionId: AppConstant.collection,
-      documentId: documentId,
-      data: addData.toMap(),
-      read: read,
-      write: write,
-    );
+        databaseId: AppConstant.database,
+        collectionId: AppConstant.collection,
+        documentId: documentId,
+        data: addData.toMap(),
+        permissions: permissions);
     return AddData.fromMap_ae(res.data);
   }
 
@@ -123,14 +123,12 @@ class ApiService {
     List<String> permission,
   ) async {
     var res = await _storage.createFile(
-      bucketId: AppConstant.profileImgBucketId,
-      fileId: 'unique()',
-      file: kIsWeb
-          ? InputFile(bytes: file.files.first.bytes)
-          : InputFile(path: file.paths.first),
-      read: permission,
-      write: permission,
-    );
+        bucketId: AppConstant.profileImgBucketId,
+        fileId: ID.unique(),
+        file: kIsWeb
+            ? InputFile(bytes: file.files.first.bytes)
+            : InputFile(path: file.paths.first),
+        permissions: permission);
 
     return res.toMap();
   }

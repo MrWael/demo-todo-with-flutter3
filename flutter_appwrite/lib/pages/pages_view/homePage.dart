@@ -245,7 +245,7 @@ class _HomePageState extends State<HomePage> {
                         final checkData = AddData(
                           title: _title.text,
                           description: _description.text,
-                          id: 'unique()',
+                          id: ID.unique(),
                           date: DateTime.now()
                               .add(
                                 Duration(
@@ -257,11 +257,11 @@ class _HomePageState extends State<HomePage> {
                         _title.clear();
                         _description.clear();
                         try {
-                          var added = await ApiService.instance.getAddData(
-                            addData: checkData,
-                            write: ['user:${widget.user.id}'],
-                            read: ['user:${widget.user.id}'],
-                          );
+                          var added = await ApiService.instance
+                              .getAddData(addData: checkData, permissions: [
+                            Permission.read(Role.user(widget.user.id)),
+                            Permission.write(Role.user(widget.user.id))
+                          ]);
                           print(added);
                           _getDataInsert();
                           router.pop();

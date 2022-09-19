@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:demotodoflutter_sdk3/data/services/api_service.dart';
 import 'package:demotodoflutter_sdk3/widget/textFormField_widget.dart';
 
+// ignore: must_be_immutable
 class SignUpPage extends StatelessWidget {
   TextEditingController _username = TextEditingController();
   TextEditingController _email = TextEditingController();
