@@ -16,10 +16,10 @@ Follow our simple [Installation Guide](https://appwrite.io/docs/installation) to
 We need to make a few configuration changes to your Appwrite server.
 
 1. Add a new Flutter App (Android or iOS or any supported platform) in Appwrite and enter application id of your application (io.appwrite.todo, etc) 
-![image](https://user-images.githubusercontent.com/45597179/191024380-6aadb210-5d95-4109-bd82-1f023416e0f9.png)
+![image](https://user-images.githubusercontent.com/45597179/191029132-5252cfdd-4da1-4ef0-9c03-d1fcc627909b.png)
 
 2. Create a new database then inside it create a new collection with the following properties
-![image](https://user-images.githubusercontent.com/45597179/191024866-f35851f4-446a-41b8-b2f4-3510b57fa7c3.png)
+![image](https://user-images.githubusercontent.com/45597179/191029199-f3788100-a505-40aa-a4cb-1ee48f1f0f1d.png)
 
 
   - Rules
@@ -32,22 +32,22 @@ Add the following rules to the collection.
 
 Add the following permissions to your collections. These permissions ensure that only registered users can access the collection.
 
-![image](https://user-images.githubusercontent.com/45597179/191024915-cd310e55-338f-4737-8cda-1cc20d50444d.png)
+![image](https://user-images.githubusercontent.com/45597179/191029248-255b2ef9-6444-4db7-92ab-44bb5d227f45.png)
 
 
  
 Add the following attributes
-![image](https://user-images.githubusercontent.com/45597179/191026534-5985352e-569f-4dd4-8430-63a248b42332.png)
+![image](https://user-images.githubusercontent.com/45597179/191029301-61348770-4476-437a-8eba-b2308a801d40.png)
 
 Create new storage bucket for profile image, with the correct permissions.
-![image](https://user-images.githubusercontent.com/45597179/191026919-2c739f47-6e18-48d0-aebc-3f900989eb4f.png)
+![image](https://user-images.githubusercontent.com/45597179/191029401-1bde9b32-6315-434e-b6a5-1b7c019acd5b.png)
 
 
 Create new placeholder user, with the following info:
 User ID: 133
 Email: guest@temp.com
 Password: 12345678
-![image](https://user-images.githubusercontent.com/45597179/191026983-2906dc83-09a1-4f91-8446-9c601ffcc493.png)
+![image](https://user-images.githubusercontent.com/45597179/191029332-55a34596-9600-4019-b247-c9a43c442bbd.png)
 
 
 
