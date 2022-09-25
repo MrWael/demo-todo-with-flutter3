@@ -287,7 +287,10 @@ class _HomePageState extends State<HomePage> {
       try {
         final res = await ApiService.instance.uploadPicture(
           image,
-          ['user:${widget.user.id}'],
+          [
+            Permission.read(Role.user(widget.user.id)),
+            Permission.write(Role.user(widget.user.id))
+          ],
         );
         final id = res['\$id'];
         if (id != null) {
